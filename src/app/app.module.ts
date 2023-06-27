@@ -18,7 +18,7 @@ import { HomeComponent } from './pages/home/home.component';
     SignUpComponent,
     SignInComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +27,6 @@ import { HomeComponent } from './pages/home/home.component';
     AngularFireAuthModule,
   ],
   providers: [AuthenticationService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

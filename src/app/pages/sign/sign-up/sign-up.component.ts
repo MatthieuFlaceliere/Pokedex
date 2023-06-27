@@ -4,10 +4,9 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['../sign.component.scss']
+  styleUrls: ['../sign.component.scss'],
 })
 export class SignUpComponent {
-
   constructor(public authenticationService: AuthenticationService) {}
 
   async signUp(email: string, password: string) {
@@ -15,5 +14,4 @@ export class SignUpComponent {
     console.log(result);
     console.log(typeof result);
   }
-
 }

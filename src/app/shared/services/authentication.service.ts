@@ -5,10 +5,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(
-    public afAuth: AngularFireAuth
-  ) {}
-  
+  constructor(public afAuth: AngularFireAuth) {}
+
   /**
    * Sign up with email/password to Firebase
    * @param email The user's email address
@@ -18,11 +16,11 @@ export class AuthenticationService {
   signUp(email: string, password: string) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then(result => {
         window.alert('You have been successfully registered!');
         return result;
       })
-      .catch((error) => {
+      .catch(error => {
         window.alert(error.message);
         return error;
       });
@@ -35,10 +33,10 @@ export class AuthenticationService {
   signIn(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then(result => {
         console.log(result);
       })
-      .catch((error) => {
+      .catch(error => {
         window.alert(error.message);
       });
   }
@@ -47,11 +45,12 @@ export class AuthenticationService {
    * @returns
    */
   signOut() {
-    return this.afAuth.signOut()
+    return this.afAuth
+      .signOut()
       .then(() => {
         window.alert('You have been successfully logged out!');
       })
-      .catch((error) => {
+      .catch(error => {
         window.alert(error.message);
       });
   }
