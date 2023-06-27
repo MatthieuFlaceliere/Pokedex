@@ -26,11 +26,13 @@
       </label>
     </fieldset>
     <button
-      type="submit"
+      #submitButton
+      type="button"
       class="contrast"
-      (click)="signIn(email.value, password.value)"
+      [attr.aria-busy]="loading"
+      (click)="signInBtnClik(email.value, password.value)"
     >
-      Sign in
+      {{ signInButtonText }}
     </button>
   </form>
 </div>

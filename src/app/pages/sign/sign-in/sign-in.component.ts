@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
@@ -7,11 +7,18 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
   styleUrls: ['../sign.component.scss']
 })
 export class SignInComponent {
-  
+
+  signInButtonText = 'Sign In';
+  loading = "false";
+
   constructor(public authenticationService: AuthenticationService) {}
   
-  signIn(email: string, password: string) {
+  signInBtnClik(email: string, password: string) {
+    this.signInButtonText = '';
+    this.loading = "true";
     this.authenticationService.signIn(email, password);
   }
+
+
   
 }

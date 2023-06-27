@@ -10,13 +10,15 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     SignInComponent,
-    HeaderComponent
+    HeaderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
