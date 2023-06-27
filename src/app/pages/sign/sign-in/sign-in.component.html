@@ -1,15 +1,36 @@
-<div class="authBlock">
-    <h3>Sign In</h3>
-    <div class="formGroup">
-        <input type="text" class="formControl" placeholder="Username" #userEmail required />
-    </div>
-    <div class="formGroup">
-        <input type="password" class="formControl" placeholder="Password" #userPassword required />
-    </div>
-
-    <div class="formGroup">
-        <input type="button" class="btn btnPrimary" value="Sign Up" (click)="
-          authenticationService.SignIn(userEmail.value, userPassword.value)
-        " />
-    </div>
+<div class="sign-container">
+  <h1>Sign in</h1>
+  <form>
+    <input
+      #email
+      type="text"
+      name="email"
+      placeholder="Email"
+      aria-label="email"
+      autocomplete="email"
+      required
+    />
+    <input
+      #password
+      type="password"
+      name="password"
+      placeholder="Password"
+      aria-label="Password"
+      autocomplete="current-password"
+      required
+    />
+    <fieldset>
+      <label for="remember">
+        <input type="checkbox" role="switch" id="remember" name="remember" />
+        Remember me
+      </label>
+    </fieldset>
+    <button
+      type="submit"
+      class="contrast"
+      (click)="signIn(email.value, password.value)"
+    >
+      Sign in
+    </button>
+  </form>
 </div>
