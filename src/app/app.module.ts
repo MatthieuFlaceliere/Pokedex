@@ -15,6 +15,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AccueilComponent } from './pages/accueil/accueil.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { SandBoxComponent } from './sand-box/sand-box.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     HomeComponent,
     AccueilComponent,
     ClickOutsideDirective,
+    SandBoxComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    HttpClientModule,
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],
