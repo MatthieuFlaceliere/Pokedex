@@ -11,6 +11,17 @@
   }
 }
 
+// Dark Mode
+.dark-mode{
+  .dark{
+    filter: invert(1);
+  }
+  .light{
+    filter: invert(0);
+  }
+}
+
+// Menu Toggle
 #menuToggle
 {
   display: block;
@@ -19,12 +30,12 @@
   
   -webkit-user-select: none;
   user-select: none;
+  margin: 3px 0 -3px 0;
 }
 
 #menuToggle a
 {
   text-decoration: none;
-  color: #232323;
   
   transition: color 0.3s ease;
 }
@@ -86,7 +97,7 @@
 {
   opacity: 1;
   transform: rotate(45deg) translate(-2px, 0px);
-  background: #232323;
+  background: #848484;
 }
 
 /*
@@ -124,7 +135,7 @@
   display: flex;
   flex-direction: column;
   
-  background: #ededed;
+  background: var(--card-background-color);
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
 

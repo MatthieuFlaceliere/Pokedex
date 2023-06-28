@@ -1,11 +1,14 @@
 <nav class="container-fluid">
   <ul>
-    <li class="title" routerLink="/">
-      <img src="assets/img/logo-dark.png" alt="" />
+    <li class="title" [routerLink]="isAuth ? '/home': '/'">
+      <img [src]="logo" alt="" />
       <strong>Pokedex</strong>
     </li>
   </ul>
   <ul>
+    <li class="dark-mode" tabindex="0" (click)="toogleDarkMode()" (keypress)="toogleDarkMode()">
+      <img [ngClass]="darkMode ? 'dark': 'light'" src="assets/img/header/dark-theme.svg" alt="dark-theme" height="30px" width="25px">
+    </li>
     <li>
       <div id="menuToggle" [ngClass]="menuActive ? 'active' : ''">
         <input type="checkbox" (click)="toggleMenu()" (clickOutside)="menuActive = false"/>
@@ -13,11 +16,11 @@
         <span></span>
         <span></span>
         <ul id="menu">
-          <div *ngIf="isStartPages()" class="startPages">
+          <div *ngIf="!isAuth" class="startPages">
             <a><li routerLink="/sign-in">Connexion</li></a>
             <a><li routerLink="/sign-up">Inscription</li></a>          
           </div>
-          <div *ngIf="!isStartPages()" class="homePages">
+          <div *ngIf="isAuth" class="homePages">
             <a 
               tabindex="0" 
               (click)="signOutClick()"

@@ -9,7 +9,6 @@ import { environment } from '../environments/environment';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { HeaderComponent } from './components/header/header.component';
-import { HomeComponent } from './pages/home/home.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -22,7 +21,6 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     SignUpComponent,
     SignInComponent,
     HeaderComponent,
-    HomeComponent,
     AccueilComponent,
     ClickOutsideDirective,
   ],
