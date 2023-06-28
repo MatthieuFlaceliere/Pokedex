@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-projet-44368": {
+      "hosting": {
+        "AngularProjet": [
+          "angular-projet-44368"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-projet-44368"
+  }
+}

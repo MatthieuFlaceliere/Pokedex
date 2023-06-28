@@ -13,8 +13,19 @@
         <span></span>
         <span></span>
         <ul id="menu">
-          <a><li routerLink="/sign-in">Sign in</li></a>
-          <a><li routerLink="/sign-up">Sign up</li></a>          
+          <div *ngIf="isStartPages()" class="startPages">
+            <a><li routerLink="/sign-in">Connexion</li></a>
+            <a><li routerLink="/sign-up">Inscription</li></a>          
+          </div>
+          <div *ngIf="!isStartPages()" class="homePages">
+            <a 
+              tabindex="0" 
+              (click)="signOutClick()"
+              (keypress)="signOutClick()"
+            >
+              <li>Déconnexion 👋</li>
+            </a>
+          </div>
         </ul>
       </div>
     </li>

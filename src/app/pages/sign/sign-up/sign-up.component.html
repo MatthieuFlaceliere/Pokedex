@@ -14,21 +14,21 @@
       #password
       type="password"
       name="password"
-      placeholder="Password"
+      placeholder="Mot de passe"
       aria-label="Password"
       autocomplete="current-password"
       required
     />
     <fieldset>
-      <span style="margin-right: 1em;">Already have an account?</span>
-      <a routerLink="/sign-in">Sign in →</a>
+      <span style="margin-right: 1em;">Vous avez déjà un compte ?</span>
+      <a routerLink="/sign-in">Connexion→</a>
     </fieldset>
     <button
       type="submit"
       class="contrast"
       (click)="signUp(email.value, password.value)"
     >
-      Sign up
+      S'inscrire
     </button>
   </form>
 </div>

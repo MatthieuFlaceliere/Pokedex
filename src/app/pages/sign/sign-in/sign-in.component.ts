@@ -7,7 +7,7 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
   styleUrls: ['../sign.component.scss'],
 })
 export class SignInComponent {
-  signInButtonText = 'Sign In';
+  signInButtonText = 'Connexion';
   loading = 'false';
 
   constructor(public authenticationService: AuthenticationService) {}

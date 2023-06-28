@@ -1,11 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(public afAuth: AngularFireAuth) {}
+  item$: Observable<any[]>;
+  firestore: Firestore = inject(Firestore);
+
+  constructor(private afAuth: AngularFireAuth, private router: Router) {
+    const itemCollection = collection(this.firestore, 'users');
+    this.item$ = collectionData(itemCollection);
+  }
 
   /**
    * Sign up with email/password to Firebase
@@ -13,16 +22,16 @@ export class AuthenticationService {
    * @param password The user's password
    * @returns Returns a UserCredential object or message error
    */
-  signUp(email: string, password: string) {
+  signUp(email: string, password: string): Promise<boolean> {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then(result => {
-        window.alert('You have been successfully registered!');
-        return result;
+        // Store the user's uid in the database
+        return true;
       })
       .catch(error => {
-        window.alert(error.message);
-        return error;
+        console.log(error);
+        return false;
       });
   }
   /**
@@ -33,8 +42,8 @@ export class AuthenticationService {
   signIn(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
-      .then(result => {
-        console.log(result);
+      .then(() => {
+        this.router.navigate(['/home']);
       })
       .catch(error => {
         window.alert(error.message);
@@ -45,13 +54,15 @@ export class AuthenticationService {
    * @returns
    */
   signOut() {
-    return this.afAuth
-      .signOut()
-      .then(() => {
-        window.alert('You have been successfully logged out!');
-      })
-      .catch(error => {
-        window.alert(error.message);
-      });
+    this.afAuth.signOut();
+    this.router.navigate(['/accueil']);
+  }
+
+  /**
+   * Get if authentified
+   * @returns Observable boolean
+   */
+  isAuth(): Observable<boolean> {
+    return this.afAuth.authState.pipe(map(u => (u ? true : false)));
   }
 }
