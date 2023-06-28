@@ -14,6 +14,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AccueilComponent } from './pages/accueil/accueil.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AccueilComponent } from './pages/accueil/accueil.component';
     HeaderComponent,
     HomeComponent,
     AccueilComponent,
+    ClickOutsideDirective,
   ],
   imports: [
     BrowserModule,

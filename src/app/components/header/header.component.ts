@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  menuActive = false;
+
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -16,12 +18,16 @@ export class HeaderComponent {
   isStartPages(): boolean {
     return this.router.url == '/sign-in' ||
       this.router.url == '/sign-up' ||
-      this.router.url == '/accueil'
+      this.router.url == '/'
       ? true
       : false;
   }
 
   signOutClick() {
     this.authService.signOut();
+  }
+
+  toggleMenu() {
+    this.menuActive = !this.menuActive;
   }
 }

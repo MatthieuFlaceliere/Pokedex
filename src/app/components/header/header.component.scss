@@ -82,7 +82,7 @@
  * Transform all the slices of hamburger
  * into a crossmark.
  */
-#menuToggle input:checked ~ span
+#menuToggle.active span
 {
   opacity: 1;
   transform: rotate(45deg) translate(-2px, 0px);
@@ -92,7 +92,7 @@
 /*
  * But let's hide the middle one.
  */
-#menuToggle input:checked ~ span:nth-last-child(3)
+#menuToggle.active span:nth-last-child(3)
 {
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
@@ -101,7 +101,7 @@
 /*
  * Ohyeah and the last one should go the other direction
  */
-#menuToggle input:checked ~ span:nth-last-child(2)
+#menuToggle.active span:nth-last-child(2)
 {
   transform: rotate(-45deg) translate(0, -1px);
 }
@@ -128,8 +128,14 @@
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
 
+  transition: all 0.5s ease;
   -webkit-transition: all 0.5s;
   -o-transition: all 0.5s;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 #menu li
@@ -141,7 +147,7 @@
 /*
  * And let's slide it in from the left
  */
-#menuToggle input:checked ~ ul
+#menuToggle.active ul
 {
   opacity: 1;
   right: 0;

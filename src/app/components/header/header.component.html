@@ -7,8 +7,8 @@
   </ul>
   <ul>
     <li>
-      <div id="menuToggle">
-        <input type="checkbox" />
+      <div id="menuToggle" [ngClass]="menuActive ? 'active' : ''">
+        <input type="checkbox" (click)="toggleMenu()" (clickOutside)="menuActive = false"/>
         <span></span>
         <span></span>
         <span></span>

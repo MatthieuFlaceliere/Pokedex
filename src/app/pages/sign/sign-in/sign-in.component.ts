@@ -9,12 +9,23 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 export class SignInComponent {
   signInButtonText = 'Connexion';
   loading = 'false';
+  error: string | null = null;
 
   constructor(public authenticationService: AuthenticationService) {}
 
   signInBtnClik(email: string, password: string) {
     this.signInButtonText = '';
     this.loading = 'true';
-    this.authenticationService.signIn(email, password);
+    this.authenticationService
+      .signIn(email, password)
+      .then(() => {
+        this.signInButtonText = 'Connexion';
+        this.loading = 'false';
+      })
+      .catch(error => {
+        this.error = this.authenticationService.translateError(error);
+        this.signInButtonText = 'Connexion';
+        this.loading = 'false';
+      });
   }
 }

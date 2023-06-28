@@ -22,16 +22,16 @@ export class AuthenticationService {
    * @param password The user's password
    * @returns Returns a UserCredential object or message error
    */
-  signUp(email: string, password: string): Promise<boolean> {
+  signUp(email: string, password: string) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then(result => {
         // Store the user's uid in the database
-        return true;
+        // return true;
+        this.router.navigate(['/home']);
       })
       .catch(error => {
-        console.log(error);
-        return false;
+        throw error;
       });
   }
   /**
@@ -46,7 +46,7 @@ export class AuthenticationService {
         this.router.navigate(['/home']);
       })
       .catch(error => {
-        window.alert(error.message);
+        throw error;
       });
   }
   /**
@@ -64,5 +64,29 @@ export class AuthenticationService {
    */
   isAuth(): Observable<boolean> {
     return this.afAuth.authState.pipe(map(u => (u ? true : false)));
+  }
+
+  /**
+   * Translate error code to message
+   * @param error The error
+   * @returns The error message
+   */
+  translateError(error: any): string {
+    switch (error.code) {
+      case 'auth/user-not-found':
+        return 'Utilisateur non trouvé.';
+      case 'auth/wrong-password':
+        return 'Mot de passe incorrect.';
+      case 'auth/email-already-in-use':
+        return "L'adresse email est déjà utilisée.";
+      case 'auth/invalid-email':
+        return "L'adresse email est invalide.";
+      case 'auth/weak-password':
+        return 'Le mot de passe doit contenir au moins 6 caractères.';
+      case 'auth/too-many-requests':
+        return 'Trop de tentatives de connexion. Veuillez réessayer plus tard.';
+      default:
+        return 'Une erreur est survenue.';
+    }
   }
 }

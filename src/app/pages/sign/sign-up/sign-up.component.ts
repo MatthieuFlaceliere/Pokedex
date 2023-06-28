@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
@@ -7,11 +8,21 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
   styleUrls: ['../sign.component.scss'],
 })
 export class SignUpComponent {
-  constructor(public authenticationService: AuthenticationService) {}
+  error: string | null = null;
 
-  async signUp(email: string, password: string) {
-    const result = await this.authenticationService.signUp(email, password);
-    console.log(result);
-    console.log(typeof result);
+  constructor(
+    public authenticationService: AuthenticationService,
+    private router: Router,
+  ) {}
+
+  signUp(email: string, password: string) {
+    this.authenticationService
+      .signUp(email, password)
+      .then(() => {
+        this.router.navigate(['/home']);
+      })
+      .catch(error => {
+        this.error = this.authenticationService.translateError(error);
+      });
   }
 }

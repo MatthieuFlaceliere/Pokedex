@@ -7,6 +7,7 @@
       name="email"
       placeholder="Email"
       aria-label="email"
+      [attr.aria-invalid]="error ? true : null"
       autocomplete="email"
       required
     />
@@ -16,15 +17,13 @@
       name="password"
       placeholder="Mot de passe"
       aria-label="Password"
+      [attr.aria-invalid]="error ? true : null"
       autocomplete="current-password"
       required
     />
-    <!-- <fieldset>
-      <label for="remember">
-        <input type="checkbox" role="switch" id="remember" name="remember" />
-        Se souvenir de moi
-      </label>
-    </fieldset> --> 
+    <fieldset *ngIf="error !== null">
+      <span class="errorMessage">{{ error }}</span>
+    </fieldset> 
     <button
       #submitButton
       type="button"

@@ -1,5 +1,5 @@
 <div class="sign-container">
-  <h1>Sign up</h1>
+  <h1>Inscription</h1>
   <form>
     <input
       #email
@@ -19,12 +19,15 @@
       autocomplete="current-password"
       required
     />
+    <fieldset *ngIf="error !== null">
+      <span class="errorMessage">{{ error }}</span>
+    </fieldset> 
     <fieldset>
       <span style="margin-right: 1em;">Vous avez déjà un compte ?</span>
       <a routerLink="/sign-in">Connexion→</a>
     </fieldset>
     <button
-      type="submit"
+      type="button"
       class="contrast"
       (click)="signUp(email.value, password.value)"
     >
