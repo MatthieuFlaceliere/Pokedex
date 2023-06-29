@@ -1,5 +1,9 @@
-article{
+:host{
   width: 104px;
   height: 108px; 
-  margin-bottom: 0;
+  margin: var(--block-spacing-vertical) 0 0 0;
+  padding: 0.5em;
+  border-radius: var(--border-radius);
+  background: var(--card-background-color);
+  box-shadow: var(--card-box-shadow);
 }
