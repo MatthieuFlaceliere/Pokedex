@@ -11,7 +11,6 @@ import { AuthenticationService } from './shared/services/authentication.service'
 import { HeaderComponent } from './components/header/header.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire/compat';
 import { AccueilComponent } from './pages/accueil/accueil.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 
@@ -27,7 +26,6 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

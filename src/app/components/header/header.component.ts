@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { onAuthStateChanged } from '@angular/fire/auth';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
@@ -14,8 +14,9 @@ export class HeaderComponent {
   isAuth = false;
 
   constructor(public authService: AuthenticationService) {
-    this.authService.isAuth().subscribe(state => {
-      this.isAuth = state;
+    // Si le user est connecté, on affiche le bouton de déconnexion
+    onAuthStateChanged(this.authService.auth, user => {
+      user ? (this.isAuth = true) : (this.isAuth = false);
     });
   }
 

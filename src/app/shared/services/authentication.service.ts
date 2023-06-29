@@ -1,20 +1,20 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import {
+  Auth,
+  UserCredential,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  item$: Observable<any[]>;
-  firestore: Firestore = inject(Firestore);
+  public auth: Auth = inject(Auth);
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) {
-    const itemCollection = collection(this.firestore, 'users');
-    this.item$ = collectionData(itemCollection);
-  }
+  constructor(private router: Router) {}
 
   /**
    * Sign up with email/password to Firebase
@@ -23,12 +23,10 @@ export class AuthenticationService {
    * @returns Returns a UserCredential object or message error
    */
   signUp(email: string, password: string) {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then(result => {
-        // Store the user's uid in the database
-        // return true;
+    return createUserWithEmailAndPassword(this.auth, email, password)
+      .then((userCredential: UserCredential) => {
         this.router.navigate(['/home']);
+        return userCredential;
       })
       .catch(error => {
         throw error;
@@ -40,8 +38,7 @@ export class AuthenticationService {
    * @param password The user's password
    */
   signIn(email: string, password: string) {
-    return this.afAuth
-      .signInWithEmailAndPassword(email, password)
+    return signInWithEmailAndPassword(this.auth, email, password)
       .then(() => {
         this.router.navigate(['/home']);
       })
@@ -51,19 +48,19 @@ export class AuthenticationService {
   }
   /**
    * Sign out from Firebase
-   * @returns
    */
   signOut() {
-    this.afAuth.signOut();
-    this.router.navigate(['/accueil']);
+    signOut(this.auth).then(() => {
+      this.router.navigate(['/accueil']);
+    });
   }
 
   /**
-   * Get if authentified
-   * @returns Observable boolean
+   * Check if user is authenticated
+   * @returns True if user is authenticated, false otherwise
    */
-  isAuth(): Observable<boolean> {
-    return this.afAuth.authState.pipe(map(u => (u ? true : false)));
+  isAuth() {
+    // return this.currentUser;
   }
 
   /**
@@ -71,8 +68,8 @@ export class AuthenticationService {
    * @param error The error
    * @returns The error message
    */
-  translateError(error: any): string {
-    switch (error.code) {
+  translateError(errorCode: string): string {
+    switch (errorCode) {
       case 'auth/user-not-found':
         return 'Utilisateur non trouvé.';
       case 'auth/wrong-password':

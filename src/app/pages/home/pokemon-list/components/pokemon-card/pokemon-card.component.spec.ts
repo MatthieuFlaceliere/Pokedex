@@ -8,7 +8,7 @@ describe('PokemonCardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PokemonCardComponent]
+      declarations: [PokemonCardComponent],
     });
     fixture = TestBed.createComponent(PokemonCardComponent);
     component = fixture.componentInstance;

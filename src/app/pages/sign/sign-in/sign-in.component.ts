@@ -23,7 +23,7 @@ export class SignInComponent {
         this.loading = 'false';
       })
       .catch(error => {
-        this.error = this.authenticationService.translateError(error);
+        this.error = this.authenticationService.translateError(error.code);
         this.signInButtonText = 'Connexion';
         this.loading = 'false';
       });

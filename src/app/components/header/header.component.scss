@@ -13,6 +13,10 @@
 
 // Dark Mode
 .dark-mode{
+  img{
+    z-index: 2;
+    position: relative;
+  }
   .dark{
     filter: invert(1);
   }
@@ -128,7 +132,7 @@
   top: 0;
   width: 200px;
   height: 100vh;
-  padding: 40px 0;
+  padding: 60px 0;
   opacity: 0;
   margin: 0;
 

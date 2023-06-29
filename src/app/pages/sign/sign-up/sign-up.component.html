@@ -28,9 +28,10 @@
     </fieldset>
     <button
       type="button"
+      [attr.aria-busy]="loading"
       (click)="signUp(email.value, password.value)"
     >
-      S'inscrire
+      {{ signUpButtonText }}
     </button>
   </form>
 </div>
