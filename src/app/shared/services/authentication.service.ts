@@ -56,14 +56,6 @@ export class AuthenticationService {
   }
 
   /**
-   * Check if user is authenticated
-   * @returns True if user is authenticated, false otherwise
-   */
-  isAuth() {
-    // return this.currentUser;
-  }
-
-  /**
    * Translate error code to message
    * @param error The error
    * @returns The error message

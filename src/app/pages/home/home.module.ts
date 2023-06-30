@@ -7,12 +7,14 @@ import { PokemonCardComponent } from './pokemon-list/components/pokemon-card/pok
 import { HttpClientModule } from '@angular/common/http';
 import { PokemonService } from './pokemon-list/services/pokemon.service';
 import { FirstLetterUppercasePipe } from './pokemon-list/pipes/first-letter-uppercase.pipe';
+import { PaginationComponent } from './pokemon-list/components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
     PokemonListComponent,
     PokemonCardComponent,
     FirstLetterUppercasePipe,
+    PaginationComponent,
   ],
   imports: [CommonModule, HomeRoutingModule, HttpClientModule],
   providers: [PokemonService],

@@ -16,7 +16,6 @@ export class HeaderComponent {
   constructor(public authService: AuthenticationService) {
     // Si le user est connecté, on affiche le bouton de déconnexion
     onAuthStateChanged(this.authService.auth, user => {
-      console.log(user);
       user ? (this.isAuth = true) : (this.isAuth = false);
     });
   }
