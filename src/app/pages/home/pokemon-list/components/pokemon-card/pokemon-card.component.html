@@ -1,1 +1,6 @@
-I'm pokemon card
+<span class="pokemon-id">#{{ pokemon.id }}</span>
+<div>
+  <img [src]="pokemonImageURL" alt="">
+</div>
+<span class="pokemon-name">{{ pokemon.name | firstLetterUppercase }}</span>
+

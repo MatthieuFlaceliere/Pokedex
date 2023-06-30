@@ -1,9 +1,26 @@
 :host{
   width: 104px;
-  height: 108px; 
-  margin: var(--block-spacing-vertical) 0 0 0;
+  margin: 5px;
   padding: 0.5em;
   border-radius: var(--border-radius);
   background: var(--card-background-color);
   box-shadow: var(--card-box-shadow);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.pokemon-id{
+  font-size: 0.8em;
+  color: var(--muted-text-color);
+  text-align: right;
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+}
+
+.pokemon-name{
+  color: var(--text-color);
+  text-align: center;
+  word-wrap: normal;
 }
