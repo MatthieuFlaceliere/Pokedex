@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PokemonService } from './pokemon-list/services/pokemon.service';
 import { FirstLetterUppercasePipe } from './pokemon-list/pipes/first-letter-uppercase.pipe';
 import { PaginationComponent } from './pokemon-list/components/pagination/pagination.component';
+import { FilterPipe } from './pokemon-list/pipes/filter.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,8 +17,9 @@ import { PaginationComponent } from './pokemon-list/components/pagination/pagina
     PokemonCardComponent,
     FirstLetterUppercasePipe,
     PaginationComponent,
+    FilterPipe,
   ],
-  imports: [CommonModule, HomeRoutingModule, HttpClientModule],
+  imports: [CommonModule, HomeRoutingModule, HttpClientModule, FormsModule],
   providers: [PokemonService],
 })
 export class HomeModule {}

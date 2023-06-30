@@ -10,8 +10,10 @@ import { IPagination } from './components/pagination/pagination.component';
 })
 export class PokemonListComponent {
   filterActive = false;
+  _searchText = '';
   loading = true;
   pokemons: Array<Result> = [];
+  pokemonsFiltered: Array<Result> = [];
   pokemonsToDisplay: Array<Result> = [];
   pokemonsPerPage = 27;
 
@@ -37,6 +39,7 @@ export class PokemonListComponent {
         response.results.forEach(pokemon => {
           this.pokemons.push(pokemon as Result);
         });
+        this.pokemonsFiltered = this.pokemons;
       },
       complete: () => {
         this.loading = false;
@@ -79,5 +82,31 @@ export class PokemonListComponent {
     } else {
       this.pokemonsPerPage = 9;
     }
+  }
+
+  /**
+   * Filtrer les pokémons
+   * @param filterValue Valeur du filtre
+   * @returns void
+   */
+  filterPokemon(filterValue: string) {
+    this.pokemonsFiltered = this.pokemons.filter(pokemon => {
+      return pokemon.name.toLocaleLowerCase().includes(filterValue);
+    });
+
+    this.pokemonsToDisplay = this.pokemonsFiltered.slice(
+      0,
+      this.pokemonsPerPage
+    );
+  }
+
+  set searchText(value: string) {
+    console.log(value);
+    this._searchText = value;
+    this.filterPokemon(value);
+  }
+
+  get searchText(): string {
+    return this._searchText;
   }
 }

@@ -1,10 +1,10 @@
 <div class="filter">
-  <input type="search" id="search" name="search" placeholder="Search">
+  <input type="search" id="search" name="search" placeholder="Search" [(ngModel)]="searchText">
   <input #filterBtn type="button" class="filter-btn" value="#" [ngClass]="filterActive ? 'active' : ''" (click)="filterActive = !filterActive">
 </div>
 <div class="pokemon-container">
   {{ loading ? 'Loading...' : ''}}
   <app-pokemon-card *ngFor="let pokemon of pokemonsToDisplay" [pokemonResult]="pokemon"></app-pokemon-card>
 </div>
-<app-pagination *ngIf="!loading" [totalItems]="pokemons.length" [itemsPerPage]="pokemonsPerPage" (pageChangedEvent)="pageChanged($event)"></app-pagination>
+<app-pagination *ngIf="!loading" [totalItems]="pokemonsFiltered.length" [itemsPerPage]="pokemonsPerPage" (pageChangedEvent)="pageChanged($event)"></app-pagination>
 
