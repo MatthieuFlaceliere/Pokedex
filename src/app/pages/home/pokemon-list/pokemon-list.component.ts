@@ -49,7 +49,6 @@ export class PokemonListComponent implements OnInit {
           this.pokemonsCompleteList.push(pokemon as Result);
         });
         this.pokemonsFiltered = this.pokemonsCompleteList;
-        console.log(this.pokemonsFiltered);
       },
       complete: () => {
         this.loading = false;
