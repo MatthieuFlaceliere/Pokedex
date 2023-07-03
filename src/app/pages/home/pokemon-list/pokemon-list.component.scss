@@ -24,3 +24,20 @@
   justify-content: center;
   margin-top: 5vh;
 }
+
+.pagination{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 2vh;
+  .page-btn{
+    margin: 0 0.5vw;
+    background-color: transparent;
+    color: var(--form-element-color);
+    width: 50px;
+    padding: 0;
+    &.active{
+      background-color: var(--primary);
+    }
+  }
+}

@@ -1,10 +1,51 @@
 <div class="filter">
-  <input type="search" id="search" name="search" placeholder="Search" [(ngModel)]="searchText">
+  <input type="search" id="search" name="search" placeholder="Rechercher nom ou numéro" [(ngModel)]="searchText">
   <input #filterBtn type="button" class="filter-btn" value="#" [ngClass]="filterActive ? 'active' : ''" (click)="filterActive = !filterActive">
 </div>
 <div class="pokemon-container">
   {{ loading ? 'Loading...' : ''}}
-  <app-pokemon-card *ngFor="let pokemon of pokemonsToDisplay" [pokemonResult]="pokemon"></app-pokemon-card>
+  <app-pokemon-card *ngFor="let pokemon of pokemonsCurrentPage" [pokemonResult]="pokemon"></app-pokemon-card>
 </div>
-<app-pagination *ngIf="!loading" [totalItems]="pokemonsFiltered.length" [itemsPerPage]="pokemonsPerPage" (pageChangedEvent)="pageChanged($event)"></app-pagination>
+<!-- Pagination -->
+<div class="pagination">
+  <input 
+    [disabled]="currentPage === 1"
+    type="button" 
+    [value]="1" 
+    (click)="onPageChanged(1)" 
+    class="page-btn" 
+    [ngClass]="{'active': currentPage === 1}">
+  <input class="page-btn" type="button" disabled [hidden]="currentPage <= lastPage - 2 && lastPage > 5 || lastPage <= 5" value="...">
+  <input 
+    [disabled]="currentPage === middlePages[0]"
+    [hidden]="lastPage <= 2"
+    type="button" [value]="middlePages[0]" 
+    (click)="onPageChanged(middlePages[0])" 
+    class="page-btn" 
+    [ngClass]="{'active': currentPage === middlePages[0]}" >
+  <input 
+    [disabled]=" currentPage === middlePages[1]"
+    [hidden]="lastPage <= 3"
+    type="button" 
+    [value]="middlePages[1]" 
+    (click)="onPageChanged(middlePages[1])" 
+    class="page-btn" 
+    [ngClass]="{'active': currentPage === middlePages[1]}">
+  <input
+    [hidden]="currentPage < 3 && lastPage > 5 || middlePages[2] === lastPage || (currentPage === lastPage && lastPage > 5) || lastPage <= 4"
+    [disabled]="currentPage === middlePages[2]"
+    type="button" 
+    [value]="middlePages[2]" 
+    (click)="onPageChanged(middlePages[2])" 
+    class="page-btn"
+    [ngClass]="{'active': currentPage === middlePages[2]}">
+  <input class="page-btn" type="button" disabled [hidden]="currentPage >= 3 || lastPage <= 5" value="...">
+  <input
+    [disabled]="currentPage === lastPage"
+    [hidden]="lastPage === 1"
+    type="button" [value]="lastPage" 
+    (click)="onPageChanged(lastPage)"
+    class="page-btn"
+    [ngClass]="{'active': currentPage === lastPage}">  
+</div>
 

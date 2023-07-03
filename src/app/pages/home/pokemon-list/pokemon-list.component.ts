@@ -1,26 +1,31 @@
-import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { PokemonService } from './services/pokemon.service';
 import { PokemonResult, Result } from '../models/pokemon-result';
-import { IPagination } from './components/pagination/pagination.component';
 
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss'],
 })
-export class PokemonListComponent {
+export class PokemonListComponent implements OnInit {
   filterActive = false;
   _searchText = '';
   loading = true;
-  pokemons: Array<Result> = [];
+  pokemonsCompleteList: Array<Result> = [];
   pokemonsFiltered: Array<Result> = [];
-  pokemonsToDisplay: Array<Result> = [];
-  pokemonsPerPage = 27;
 
-  constructor(
-    private pokemonService: PokemonService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
+  pokemonsCurrentPage: Array<Result> = [];
+
+  // Pagination
+  pokemonsPerPage = 27;
+  currentPage = 1;
+  lastPage = 0;
+  totalPokemons = 0;
+  middlePages = [2, 3, 4];
+
+  constructor(private pokemonService: PokemonService) {}
+
+  ngOnInit(): void {
     this.getPokemonResult(10000, 0);
     this.setPokemonsPerPage(window.innerWidth);
   }
@@ -37,32 +42,81 @@ export class PokemonListComponent {
     this.pokemonService.getPokemonResult(limit, offset).subscribe({
       next: (response: PokemonResult) => {
         response.results.forEach(pokemon => {
-          this.pokemons.push(pokemon as Result);
+          // On récupère le numéro du pokémon à partir de l'url
+          pokemon.number = parseInt(
+            pokemon.url.split('/')[pokemon.url.split('/').length - 2]
+          );
+          this.pokemonsCompleteList.push(pokemon as Result);
         });
-        this.pokemonsFiltered = this.pokemons;
+        this.pokemonsFiltered = this.pokemonsCompleteList;
+        console.log(this.pokemonsFiltered);
       },
       complete: () => {
         this.loading = false;
-        this.changeDetectorRef.detectChanges();
+        this.totalPokemons = this.pokemonsFiltered.length;
+        this.initPagination();
       },
     });
   }
 
+  //#region Pagination
   /**
    * Quand une page est changée
    * @param pokemons Liste des pokémons à afficher
    * @returns void
    */
-  pageChanged(pagination: IPagination) {
-    this.pokemonsToDisplay = this.pokemons.slice(
-      (pagination.currentPage - 1) * pagination.itemsPerPage,
-      pagination.currentPage * pagination.itemsPerPage
+  onPageChanged(newPage: number) {
+    this.pokemonsCurrentPage = this.pokemonsFiltered.slice(
+      (newPage - 1) * this.pokemonsPerPage,
+      newPage * this.pokemonsPerPage
     );
+    this.pagesUpdate(newPage);
+  }
+
+  /**
+   * Initialise la pagination
+   * @param nbResults Nombre de résultats
+   */
+  initPagination() {
+    this.currentPage = 1;
+    this.lastPage = Math.ceil(this.totalPokemons / this.pokemonsPerPage);
+    this.onPageChanged(this.currentPage);
+  }
+
+  /**
+   * Update les pages à afficher au milieu de la pagination
+   * @param page Numéro de la page à afficher
+   * @returns void
+   */
+  pagesUpdate(page: number) {
+    // Si la page demandée est entre 3 et l'avant dernière page on set les trois pages du milieu à afficher
+    if (page >= 4 && this.lastPage > 5) this.updatePagesArray(page);
+
+    // Si la page 1 est demandée on set les pages à afficher à 2 et 3
+    if (page === 1) {
+      this.middlePages = [2, 3, 4];
+    }
+
+    // Si la dernière page est demandée on set les pages à afficher à l'avant dernière et à l'avant avant dernière
+    if (page === this.lastPage && this.lastPage > 5) {
+      this.middlePages = [this.lastPage - 2, this.lastPage - 1];
+    }
+
+    this.currentPage = page;
+  }
+
+  /**
+   * Set l'array des pages à afficher au milieu de la pagination
+   * @param page Page courante (numéro de la page qui va être affichée au milieu)
+   */
+  updatePagesArray(page: number) {
+    this.middlePages = [page - 1, page, page + 1];
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.setPokemonsPerPage(event.target.innerWidth);
+    this.initPagination();
   }
 
   /**
@@ -84,20 +138,34 @@ export class PokemonListComponent {
     }
   }
 
+  //#endregion Pagination
+
+  // #region Filter
   /**
    * Filtrer les pokémons
    * @param filterValue Valeur du filtre
    * @returns void
    */
   filterPokemon(filterValue: string) {
-    this.pokemonsFiltered = this.pokemons.filter(pokemon => {
-      return pokemon.name.toLocaleLowerCase().includes(filterValue);
+    // Filtre les pokémons suivant le nom ou le numéro à partir de la list complète
+    this.pokemonsFiltered = this.pokemonsCompleteList.filter(pokemon => {
+      return (
+        pokemon.name
+          .toLocaleLowerCase()
+          .includes(filterValue.toLocaleLowerCase()) ||
+        pokemon.number?.toString().includes(filterValue)
+      );
     });
 
-    this.pokemonsToDisplay = this.pokemonsFiltered.slice(
+    // On set les pokémons à afficher sur la première page
+    this.pokemonsCurrentPage = this.pokemonsFiltered.slice(
       0,
       this.pokemonsPerPage
     );
+
+    // On set le nombre de pokémons total et on initialise la pagination
+    this.totalPokemons = this.pokemonsFiltered.length;
+    this.initPagination();
   }
 
   set searchText(value: string) {
@@ -109,4 +177,6 @@ export class PokemonListComponent {
   get searchText(): string {
     return this._searchText;
   }
+
+  //#endregion Filter
 }
