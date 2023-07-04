@@ -168,7 +168,6 @@ export class PokemonListComponent implements OnInit {
   }
 
   set searchText(value: string) {
-    console.log(value);
     this._searchText = value;
     this.filterPokemon(value);
   }
