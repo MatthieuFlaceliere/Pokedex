@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Pokemon } from '../../../models/pokemon';
+import { LightPokemon, Pokemon } from '../../../models/pokemon';
 import { Result } from '../../../models/pokemon-result';
 import { PokemonService } from '../../services/pokemon.service';
 
@@ -10,7 +10,8 @@ import { PokemonService } from '../../services/pokemon.service';
 })
 export class PokemonCardComponent implements OnInit {
   @Input() pokemonResult: Result = {} as Result;
-  pokemon: Pokemon = {} as Pokemon;
+  @Input() searchText = '';
+  pokemon: LightPokemon = {} as LightPokemon;
   loading = true;
   pokemonImageURL = 'assets/img/home/no-image.png ';
 
@@ -22,7 +23,7 @@ export class PokemonCardComponent implements OnInit {
 
   getPokemonDetails() {
     this.pokemonService.getPokemonDetails(this.pokemonResult.url).subscribe({
-      next: (response: Pokemon) => {
+      next: (response: LightPokemon) => {
         this.pokemon = response;
         if (this.pokemon.sprites.front_default !== null) {
           this.pokemonImageURL = this.pokemon.sprites.front_default;

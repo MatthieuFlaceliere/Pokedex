@@ -4,7 +4,7 @@
 </div>
 <div class="pokemon-container">
   {{ loading ? 'Loading...' : ''}}
-  <app-pokemon-card *ngFor="let pokemon of pokemonsCurrentPage" [pokemonResult]="pokemon"></app-pokemon-card>
+  <app-pokemon-card *ngFor="let pokemon of pokemonsCurrentPage" [pokemonResult]="pokemon" [searchText]="searchText"></app-pokemon-card>
 </div>
 <!-- Pagination -->
 <div class="pagination">

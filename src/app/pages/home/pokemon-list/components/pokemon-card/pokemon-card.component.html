@@ -1,6 +1,6 @@
-<span class="pokemon-id">#{{ pokemon.id }}</span>
+<span class="pokemon-id" [innerHTML]="'#' + pokemon.id| highlight: searchText"></span>
 <div>
   <img [src]="pokemonImageURL" alt="">
 </div>
-<span class="pokemon-name">{{ pokemonResult.name | firstLetterUppercase }}</span>
+<span class="pokemon-name" [innerHTML]="pokemonResult.name | firstLetterUppercase | highlight: searchText"></span>
 

@@ -43,9 +43,7 @@ export class PokemonListComponent implements OnInit {
       next: (response: PokemonResult) => {
         response.results.forEach(pokemon => {
           // On récupère le numéro du pokémon à partir de l'url
-          pokemon.number = parseInt(
-            pokemon.url.split('/')[pokemon.url.split('/').length - 2]
-          );
+          pokemon.number = this.pokemonService.getPokemonId(pokemon.url);
           this.pokemonsCompleteList.push(pokemon as Result);
         });
         this.pokemonsFiltered = this.pokemonsCompleteList;
