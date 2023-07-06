@@ -24,3 +24,17 @@
   text-align: center;
   word-wrap: normal;
 }
+
+.types-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 0;
+  left: 0px;
+  img{
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0 0.1em;
+  }
+}

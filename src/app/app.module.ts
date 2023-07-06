@@ -13,6 +13,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AccueilComponent } from './pages/accueil/accueil.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { HomeModule } from './pages/home/home.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    HomeModule,
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent],

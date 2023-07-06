@@ -31,6 +31,10 @@ export class PokemonCardComponent implements OnInit {
         if (this.pokemon.image !== null) {
           this.pokemonImageUrl = this.pokemon.image;
         }
+        this.pokemon.types = this.pokemon.types.map(type => {
+          return 'assets/img/pokemon-types/' + type + '.png';
+        });
+        console.log(this.pokemon);
       },
     });
   }
