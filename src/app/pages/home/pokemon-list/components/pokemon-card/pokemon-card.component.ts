@@ -12,10 +12,13 @@ export class PokemonCardComponent implements OnInit {
   @Input() pokemonResult: Result = {} as Result;
   @Input() searchText = '';
   pokemon: LightPokemon = {} as LightPokemon;
-  loading = true;
-  pokemonImageURL = 'assets/img/home/no-image.png ';
+  loadingImage = true;
+  defaultImage: string;
+  pokemonImageUrl: string;
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(private pokemonService: PokemonService) {
+    this.defaultImage = this.pokemonImageUrl = 'assets/img/home/no-image.png';
+  }
 
   ngOnInit() {
     this.getPokemonDetails();
@@ -25,13 +28,14 @@ export class PokemonCardComponent implements OnInit {
     this.pokemonService.getPokemonDetails(this.pokemonResult.url).subscribe({
       next: (response: LightPokemon) => {
         this.pokemon = response;
-        if (this.pokemon.sprites.front_default !== null) {
-          this.pokemonImageURL = this.pokemon.sprites.front_default;
+        if (this.pokemon.image !== null) {
+          this.pokemonImageUrl = this.pokemon.image;
         }
       },
-      complete: () => {
-        this.loading = false;
-      },
     });
+  }
+
+  imageLoad() {
+    this.loadingImage = false;
   }
 }
