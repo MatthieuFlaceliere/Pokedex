@@ -1,8 +1,8 @@
 export interface LightPokemon {
   id: number;
   name: string;
-  sprites: Sprites;
-  types: Type[];
+  image: string;
+  types: string[];
 }
 export interface Pokemon {
   abilities: Ability[];

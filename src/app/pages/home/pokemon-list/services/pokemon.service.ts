@@ -32,17 +32,12 @@ export class PokemonService {
     if (pokemon) {
       return new Observable(observer => {
         observer.next(pokemon);
+        observer.complete();
       });
     } else {
       const pokemon$ = this.http.get<Pokemon>(url).pipe(
         map((pokemon: Pokemon) => {
-          const lightPokemon: LightPokemon = {
-            id: pokemon.id,
-            name: pokemon.name,
-            sprites: pokemon.sprites,
-            types: pokemon.types,
-          };
-          return lightPokemon;
+          return this.parsePokemonToLightPokemon(pokemon);
         })
       );
       pokemon$.subscribe({
@@ -87,5 +82,20 @@ export class PokemonService {
     } catch (e) {
       console.error('Error saving to localStorage');
     }
+  }
+
+  /**
+   * Parse pokemon to lightPokemon
+   * @param pokemon Pokemon
+   * @returns LightPokemon
+   */
+  parsePokemonToLightPokemon(pokemon: Pokemon): LightPokemon {
+    const lightPokemon: LightPokemon = {
+      id: pokemon.id,
+      name: pokemon.name,
+      image: pokemon.sprites.front_default,
+      types: pokemon.types.map(type => type.type.name),
+    };
+    return lightPokemon;
   }
 }
