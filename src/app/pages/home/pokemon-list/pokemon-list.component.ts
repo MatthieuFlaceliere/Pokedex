@@ -8,7 +8,7 @@ import { PokemonResult, Result } from '../models/pokemon-result';
   styleUrls: ['./pokemon-list.component.scss'],
 })
 export class PokemonListComponent implements OnInit {
-  filterActive = false;
+  sortBy = 'number';
   _searchText = '';
   loading = true;
   pokemonsCompleteList: Array<Result> = [];
@@ -172,6 +172,26 @@ export class PokemonListComponent implements OnInit {
 
   get searchText(): string {
     return this._searchText;
+  }
+
+  /**
+   * Chnage le tri des pokémons number > name et name > number
+   * @returns void
+   */
+  changeSortBy() {
+    if (this.sortBy === 'number') {
+      this.sortBy = 'name';
+      this.pokemonsFiltered.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+    } else {
+      this.sortBy = 'number';
+      this.pokemonsFiltered.sort((a, b) => {
+        if (a.number === undefined || b.number === undefined) return -1;
+        return a.number - b.number;
+      });
+    }
+    this.initPagination();
   }
 
   //#endregion Filter

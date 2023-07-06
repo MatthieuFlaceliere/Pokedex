@@ -1,6 +1,6 @@
 <div class="filter">
   <input type="search" id="search" name="search" placeholder="Rechercher nom ou numéro" [(ngModel)]="searchText">
-  <input #filterBtn type="button" class="filter-btn" value="#" [ngClass]="filterActive ? 'active' : ''" (click)="filterActive = !filterActive">
+  <input #filterBtn type="button" class="filter-btn" [value]="sortBy === 'number' ?  '#' : 'A'" (click)="changeSortBy()">
 </div>
 <div class="pokemon-container">
   {{ loading ? 'Loading...' : ''}}
