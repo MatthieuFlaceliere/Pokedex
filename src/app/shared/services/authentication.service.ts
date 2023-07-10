@@ -6,13 +6,19 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from '@angular/fire/auth';
+import { Firestore, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { getDoc, doc } from '@firebase/firestore';
+import { User } from '../../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   public auth: Auth = inject(Auth);
+  firestore: Firestore = inject(Firestore);
+
+  private _user: User | null = null;
 
   constructor(private router: Router) {}
 
@@ -25,8 +31,17 @@ export class AuthenticationService {
   signUp(email: string, password: string) {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential: UserCredential) => {
-        this.router.navigate(['/home']);
-        return userCredential;
+        const newUser = {
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          catchedPokemons: [],
+        } as User;
+
+        return setDoc(doc(this.firestore, 'users', email), newUser).then(() => {
+          this.router.navigate(['/home']);
+          this.user = newUser;
+          return userCredential;
+        });
       })
       .catch(error => {
         throw error;
@@ -40,7 +55,15 @@ export class AuthenticationService {
   signIn(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password)
       .then(() => {
-        this.router.navigate(['/home']);
+        getDoc(doc(this.firestore, 'users', email)).then(doc => {
+          if (doc.exists()) {
+            const user = doc.data() as User;
+            this.user = user;
+            this.router.navigate(['/home']);
+          } else {
+            throw new Error('Utilisateur non trouvé.');
+          }
+        });
       })
       .catch(error => {
         throw error;
@@ -51,6 +74,7 @@ export class AuthenticationService {
    */
   signOut() {
     signOut(this.auth).then(() => {
+      localStorage.removeItem('user');
       this.router.navigate(['/accueil']);
     });
   }
@@ -77,5 +101,40 @@ export class AuthenticationService {
       default:
         return 'Une erreur est survenue.';
     }
+  }
+
+  /**
+   * Set the user
+   * @param user The user
+   */
+  private set user(user: User | null) {
+    this._user = user;
+    localStorage.setItem('user', btoa(JSON.stringify(user)));
+  }
+
+  /**
+   * Get the user
+   * @returns User | null
+   * @memberof AuthenticationService
+   * @returns User | null
+   */
+  public get user(): User | null {
+    if (!this._user) {
+      const user = localStorage.getItem('user');
+      if (user) {
+        this._user = JSON.parse(atob(user));
+      }
+    }
+    return this._user;
+  }
+
+  /**
+   * Update le user
+   * @param user Le user
+   */
+  public updateUser(user: User) {
+    setDoc(doc(this.firestore, 'users', user.email), user).then(() => {
+      this.user = user;
+    });
   }
 }

@@ -1,6 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { LightPokemon, Pokemon } from '../../../models/pokemon';
-import { Result } from '../../../models/pokemon-result';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { LightPokemon } from '../../../interfaces/pokemon';
+import { Result } from '../../../interfaces/pokemon-result';
 import { PokemonService } from '../../services/pokemon.service';
 
 @Component({
@@ -11,6 +18,7 @@ import { PokemonService } from '../../services/pokemon.service';
 export class PokemonCardComponent implements OnInit {
   @Input() pokemonResult: Result = {} as Result;
   @Input() searchText = '';
+  @Output() cardClickEvent = new EventEmitter<LightPokemon>();
   pokemon: LightPokemon = {} as LightPokemon;
   loadingImage = true;
   defaultImage: string;
@@ -34,12 +42,16 @@ export class PokemonCardComponent implements OnInit {
         this.pokemon.types = this.pokemon.types.map(type => {
           return 'assets/img/pokemon-types/' + type + '.png';
         });
-        console.log(this.pokemon);
       },
     });
   }
 
   imageLoad() {
     this.loadingImage = false;
+  }
+
+  @HostListener('click', ['$event'])
+  onClick() {
+    this.cardClickEvent.emit(this.pokemon);
   }
 }

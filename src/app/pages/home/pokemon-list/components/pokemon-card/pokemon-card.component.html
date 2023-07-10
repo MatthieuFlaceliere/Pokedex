@@ -1,11 +1,6 @@
-
-<span class="pokemon-id" [innerHTML]="'#' + pokemon.id| highlight: searchText"></span>
-<div>
+<span class="pokemon-id" [innerHTML]="pokemon.id | numberFomart | highlight: searchText"></span>
+<div [ngClass]="pokemon.catched ? 'catched' : 'no-catched'">
   <img *ngIf="loadingImage" [src]="defaultImage" alt="default-pokemon-image">
   <img [hidden]="loadingImage" [src]="pokemonImageUrl" alt="pokemon-image" (load)="imageLoad()">
 </div>
 <span class="pokemon-name" [innerHTML]="pokemonResult.name | firstLetterUppercase | highlight: searchText"></span>
-
-<!-- <div class="types-container">
-  <img *ngFor="let type of pokemon.types" [src]="type" alt="">
-</div> -->

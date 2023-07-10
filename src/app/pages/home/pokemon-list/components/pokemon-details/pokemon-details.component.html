@@ -1,0 +1,76 @@
+<div class="details-container">
+  <div class="details-header">
+    <div class="left">
+      <div (click)="closeDetails()" (keypress)="closeDetails()" tabindex="0">
+        <div class="back-arrow"></div>
+      </div>
+      <h3
+        class="pokemon-name"
+        [innerHTML]="pokemon.name | firstLetterUppercase"></h3>
+    </div>
+    <h3 class="pokemon-id" [innerHTML]="pokemon.id | numberFomart"></h3>
+  </div>
+  <div class="details-body">
+    <div class="details-image-container">
+      <img [src]="pokemonImageUrl" alt="pokemon-image" (load)="imageLoad()" />
+      <a
+        role="button"
+        class="catch-btn"
+        [ngClass]="pokemon.catched ? 'isCatched' : ''"
+        (click)="toogleCatch()"
+        (keypress)="toogleCatch()"
+        tabindex="0"
+        data-tooltip="Cliquer pour capturer"
+        data-placement="left">
+        <img src="assets/img/home/pokeball.png" alt="" />
+      </a>
+    </div>
+    <div class="details-info-container">
+      <div class="types-container">
+        <img *ngFor="let type of pokemon.types" [src]="type" alt="" />
+      </div>
+      <div class="info-container">
+        <div class="info-box">
+          <div class="info-title">Taille</div>
+          <div class="info-value size-value">
+            <div class="logo-height"></div>
+            <span [innerHTML]="pokemon.height + 'cm'"></span>
+          </div>
+        </div>
+        <div class="info-box separator">
+          <div class="info-title">Poids</div>
+          <div class="info-value size-value">
+            <div class="logo-weight"></div>
+            <span [innerHTML]="pokemon.weight + 'kg'"></span>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="info-title">Capacités</div>
+          <div class="info-value">
+            <span *ngFor="let ability of pokemon.abilities">
+              <span
+                [innerHTML]="
+                  ability.ability.name | firstLetterUppercase
+                "></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="stat-container">
+        <div class="title">Stats</div>
+        <div class="value">
+          <div *ngFor="let stat of pokemon.stats" class="stat-box">
+            <span
+              [innerHTML]="
+                (stat.stat.name | firstLetterUppercase) +
+                '\t' +
+                stat.base_stat +
+                '/100'
+              "></span>
+            <progress [value]="stat.base_stat" max="100"></progress>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

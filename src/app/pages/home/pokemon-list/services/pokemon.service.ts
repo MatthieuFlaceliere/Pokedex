@@ -1,13 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PokemonResult } from '../../models/pokemon-result';
+import { PokemonResult } from '../../interfaces/pokemon-result';
 import { Observable, map } from 'rxjs';
-import { LightPokemon, Pokemon } from '../../models/pokemon';
+import { LightPokemon, Pokemon } from '../../interfaces/pokemon';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { User } from 'src/app/interfaces/user';
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonService {
-  constructor(private http: HttpClient) {}
+  user: User | null = null;
+
+  constructor(
+    private http: HttpClient,
+    private authService: AuthenticationService
+  ) {
+    if (this.authService.user) this.user = this.authService.user;
+  }
 
   /**
    * Récupère la liste des pokémons
@@ -85,6 +94,25 @@ export class PokemonService {
   }
 
   /**
+   * Change l'état de capture du pokémon
+   * @param pokemon LightPokemon
+   * @returns void
+   */
+  toogleCatch(pokemon: LightPokemon): void {
+    if (this.user) {
+      if (pokemon.catched) {
+        this.user.catchedPokemons.push(pokemon.id);
+      } else {
+        this.user.catchedPokemons = this.user.catchedPokemons.filter(
+          id => id !== pokemon.id
+        );
+      }
+      this.setPokemonInLocalStorage(pokemon);
+      this.authService.updateUser(this.user);
+    }
+  }
+
+  /**
    * Parse pokemon to lightPokemon
    * @param pokemon Pokemon
    * @returns LightPokemon
@@ -95,6 +123,11 @@ export class PokemonService {
       name: pokemon.name,
       image: pokemon.sprites.front_default,
       types: pokemon.types.map(type => type.type.name),
+      catched: this.user?.catchedPokemons.includes(pokemon.id) || false,
+      height: pokemon.height * 10, // Convert to dm -> cm
+      weight: pokemon.weight / 10, // Convert to hg -> kg
+      stats: pokemon.stats,
+      abilities: pokemon.abilities,
     };
     return lightPokemon;
   }

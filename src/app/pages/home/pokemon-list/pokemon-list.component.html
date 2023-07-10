@@ -4,7 +4,7 @@
 </div>
 <div class="pokemon-container">
   {{ loading ? 'Loading...' : ''}}
-  <app-pokemon-card *ngFor="let pokemon of pokemonsCurrentPage" [pokemonResult]="pokemon" [searchText]="searchText"></app-pokemon-card>
+  <app-pokemon-card *ngFor="let pokemon of pokemonsCurrentPage" [pokemonResult]="pokemon" [searchText]="searchText" (cardClickEvent)="openPokemonDetails($event)"></app-pokemon-card>
 </div>
 <!-- Pagination -->
 <div class="pagination">
@@ -49,3 +49,5 @@
     [ngClass]="{'active': currentPage === lastPage}">  
 </div>
 
+<!-- Pokemon details -->
+<app-pokemon-details *ngIf="pokemonDetails" [pokemon]="pokemonDetails" (closeDetailsEvent)="closePokemonDetails()"></app-pokemon-details>

@@ -3,6 +3,11 @@ export interface LightPokemon {
   name: string;
   image: string;
   types: string[];
+  catched: boolean;
+  height: number;
+  weight: number;
+  stats: Stat[];
+  abilities: Ability[];
 }
 export interface Pokemon {
   abilities: Ability[];

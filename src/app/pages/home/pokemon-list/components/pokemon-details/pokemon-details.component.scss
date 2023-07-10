@@ -1,0 +1,151 @@
+:host{
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vH;
+  padding-top: 59px;
+  overflow-x: hidden;
+  background-color: var(--background-color);
+}
+
+.details-container{
+  height: 100%;
+  .details-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing);
+    h3{
+      margin: 0;
+    }
+    .left{
+      display: flex;
+      justify-content: space-between;
+      .back-arrow{
+        background-color: var(--h3-color);
+        height: 40px;
+        width: 40px;
+        -webkit-mask: url("../../../../../../assets/img/home/close.svg") no-repeat center;
+        mask: url("../../../../../../assets/img/home/close.svg") no-repeat center;
+        margin-right: 3vw;
+      }
+    }
+  }
+  .details-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--spacing);
+    .details-image-container{
+      img{
+        height: 344px;
+        margin: 0 auto;
+      }
+      .catch-btn{
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+        padding: 0.3em;
+        opacity: 1;
+        pointer-events: all;
+        filter: grayscale(1);
+        img{
+          height: 40px;
+          width: 40px;
+        }
+        &.isCatched{
+          filter: unset;
+        }
+      }
+      width: 100%;
+      display: flex;
+      margin: 0 auto;
+      position: relative;
+    }
+    .details-info-container{
+      display: flex;
+      flex-direction: column;
+      background: var(--card-background-color);
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.25) inset;
+      border-radius: 8px;
+      padding: var(--spacing) 0;
+      margin-bottom: var(--spacing);
+      width: 100%;
+      // =====================
+      //    Container types
+      // =====================
+      .types-container{
+        display: flex;
+        justify-self: center;
+        align-self: center;
+        img{
+          width: 1.5em;
+          height: 1.5em;
+          margin: 0 0.2em;
+        }
+      }
+      // =====================
+      //    Container info
+      // =====================
+      .info-container{
+        display: flex;
+        justify-content: space-around;
+        align-items: baseline;
+        padding: var(--spacing);
+        .info-box{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 var(--spacing);
+          .info-title{
+            font-size: 0.8em;
+            color: var(--muted-text-color);
+            text-align: center;
+          }
+          .info-value{
+            font-size: 1.2em;
+            color: var(--text-color);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            &.size-value{
+              flex-direction: row;
+              align-items: center;
+              .logo-height{
+                width: 1em;
+                height: 1em;
+                margin: 0 0.2em;
+                background-color: var(--h3-color);
+                -webkit-mask: url("../../../../../../assets/img/home/height.svg") no-repeat center;
+                mask: url("../../../../../../assets/img/home/height.svg") no-repeat center;
+              }
+              .logo-weight{
+                width: 1em;
+                height: 1em;
+                margin: 0 0.2em;
+                background-color: var(--h3-color);
+                -webkit-mask: url("../../../../../../assets/img/home/weight.svg") no-repeat center;
+                mask: url("../../../../../../assets/img/home/weight.svg") no-repeat center;
+              }
+            }
+          }
+          &.separator{
+            border-left: var(--border-width) solid var(--accordion-border-color);;
+            border-right: var(--border-width) solid var(--accordion-border-color);;
+          }
+        }
+      }
+      // =====================
+      //    Container stats
+      // ===================== 
+      .stat-container{
+        .title{
+          text-align: center;
+        }
+      }
+    }
+  }
+}

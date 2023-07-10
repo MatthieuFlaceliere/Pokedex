@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { PokemonService } from './services/pokemon.service';
-import { PokemonResult, Result } from '../models/pokemon-result';
+import { PokemonResult, Result } from '../interfaces/pokemon-result';
+import { LightPokemon } from '../interfaces/pokemon';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -15,6 +16,8 @@ export class PokemonListComponent implements OnInit {
   pokemonsFiltered: Array<Result> = [];
 
   pokemonsCurrentPage: Array<Result> = [];
+
+  pokemonDetails: LightPokemon | null = null;
 
   // Pagination
   pokemonsPerPage = 27;
@@ -54,6 +57,23 @@ export class PokemonListComponent implements OnInit {
         this.initPagination();
       },
     });
+  }
+
+  /**
+   * Ouvre la modal des détails du pokémon
+   * @param pokemon Pokémon à afficher
+   * @returns void
+   */
+  openPokemonDetails(pokemon: LightPokemon) {
+    this.pokemonDetails = pokemon;
+  }
+
+  /**
+   * Ferme la modal des détails du pokémon
+   * @returns void
+   */
+  closePokemonDetails() {
+    this.pokemonDetails = null;
   }
 
   //#region Pagination
@@ -111,8 +131,10 @@ export class PokemonListComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.setPokemonsPerPage(event.target.innerWidth);
+  onResize(event: Event) {
+    if (event.target && 'innerWidth' in event.target) {
+      this.setPokemonsPerPage(event.target.innerWidth as number);
+    }
     this.initPagination();
   }
 

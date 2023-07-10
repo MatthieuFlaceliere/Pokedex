@@ -9,6 +9,8 @@ import { PokemonService } from './pokemon-list/services/pokemon.service';
 import { FirstLetterUppercasePipe } from './pokemon-list/pipes/first-letter-uppercase.pipe';
 import { HighlightPipe } from './pokemon-list/pipes/highlight.pipe';
 import { FormsModule } from '@angular/forms';
+import { PokemonDetailsComponent } from './pokemon-list/components/pokemon-details/pokemon-details.component';
+import { NumberFomartPipe } from './pokemon-list/pipes/number-fomart.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { FormsModule } from '@angular/forms';
     PokemonCardComponent,
     FirstLetterUppercasePipe,
     HighlightPipe,
+    PokemonDetailsComponent,
+    NumberFomartPipe,
   ],
   imports: [CommonModule, HomeRoutingModule, HttpClientModule, FormsModule],
   providers: [PokemonService],
