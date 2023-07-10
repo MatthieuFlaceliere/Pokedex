@@ -52,6 +52,8 @@ export class PokemonCardComponent implements OnInit {
 
   @HostListener('click', ['$event'])
   onClick() {
-    this.cardClickEvent.emit(this.pokemon);
+    if (this.pokemon !== ({} as LightPokemon)) {
+      this.cardClickEvent.emit(this.pokemon);
+    }
   }
 }

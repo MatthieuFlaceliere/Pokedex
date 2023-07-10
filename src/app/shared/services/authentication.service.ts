@@ -38,6 +38,7 @@ export class AuthenticationService {
         } as User;
 
         return setDoc(doc(this.firestore, 'users', email), newUser).then(() => {
+          this.clearOldSession();
           this.router.navigate(['/home']);
           this.user = newUser;
           return userCredential;
@@ -57,6 +58,7 @@ export class AuthenticationService {
       .then(() => {
         getDoc(doc(this.firestore, 'users', email)).then(doc => {
           if (doc.exists()) {
+            this.clearOldSession();
             const user = doc.data() as User;
             this.user = user;
             this.router.navigate(['/home']);
@@ -136,5 +138,13 @@ export class AuthenticationService {
     setDoc(doc(this.firestore, 'users', user.email), user).then(() => {
       this.user = user;
     });
+  }
+
+  /**
+   * Efface l'ancienne session
+   */
+  public clearOldSession() {
+    localStorage.clear();
+    this._user = null;
   }
 }
