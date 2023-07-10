@@ -45,9 +45,9 @@
         margin: 0 auto;
       }
       .catch-btn{
-        position: absolute;
+        position: fixed;
         bottom: 10px;
-        right: 0;
+        right: 20px;
         padding: 0.3em;
         opacity: 1;
         pointer-events: all;
@@ -72,7 +72,7 @@
       box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.25) inset;
       border-radius: 8px;
       padding: var(--spacing) 0;
-      margin-bottom: var(--spacing);
+      margin-bottom: 60px;
       width: 100%;
       // =====================
       //    Container types
@@ -149,4 +149,18 @@
       }
     }
   }
+}
+
+@media screen and (min-width: 768px) {
+  .details-container{
+    .details-body{
+      flex-direction: row;
+      .details-image-container{
+        margin-right: var(--spacing);
+      }
+      .details-info-container{
+        margin-left: var(--spacing);
+      }
+    }
+  } 
 }
