@@ -24,6 +24,12 @@
     <fieldset *ngIf="error !== null">
       <span class="errorMessage">{{ error }}</span>
     </fieldset> 
+    <fieldset>
+      <a
+        href="#"
+        [attr.aria-busy]="loading"
+        (click)="signInDemo($event)">Demo</a>
+    </fieldset>
     <button
       type="button"
       [attr.aria-busy]="loading"

@@ -28,4 +28,9 @@ export class SignInComponent {
         this.loading = 'false';
       });
   }
+
+  signInDemo($event: MouseEvent) {
+    $event.preventDefault();
+    this.signInBtnClik('test@gmail.com', 'Test1234');
+  }
 }
