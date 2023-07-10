@@ -8,5 +8,6 @@ export interface PokemonResult {
 export interface Result {
   name: string;
   number?: number;
+  catched: boolean;
   url: string;
 }

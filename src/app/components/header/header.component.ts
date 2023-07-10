@@ -28,7 +28,7 @@ export class HeaderComponent {
     this.menuActive = !this.menuActive;
   }
 
-  toogleDarkMode() {
+  togleDarkMode() {
     // Get the HTML DOM element
     const html = document.querySelector('html');
 

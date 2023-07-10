@@ -4,6 +4,7 @@
   margin-top: 89px;
   padding-bottom: 2vh;
   border-bottom: 2px solid var(--muted-border-color);
+  position: relative;
   #search{
     margin: 0 3vw 0 0;
     width: calc(100% - 3vw - 50px);
@@ -14,8 +15,34 @@
     border-radius: 50%;
     margin: 0;
     border-color: var(--form-element-border-color);
+    padding: 10px;
+    img{
+      height: 25px;
+      width: 25px;
+    }
+  }
+  .filterbox{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 50px;
+    border-radius: var(--border-radius);
+    background: var(--card-background-color);
+    box-shadow: 1px 2px 3px black;
+    padding: var(--spacing);
+    z-index: 50;
+    .filter-title{
+      font-size: 1.2em;
+      color: var(--text-color);
+    }
+    .filter-options{
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
+
 
 .pokemon-container{
   display: flex;

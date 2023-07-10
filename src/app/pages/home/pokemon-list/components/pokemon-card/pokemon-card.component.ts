@@ -36,12 +36,10 @@ export class PokemonCardComponent implements OnInit {
     this.pokemonService.getPokemonDetails(this.pokemonResult.url).subscribe({
       next: (response: LightPokemon) => {
         this.pokemon = response;
+        this.pokemon.catched = this.pokemonResult.catched;
         if (this.pokemon.image !== null) {
           this.pokemonImageUrl = this.pokemon.image;
         }
-        this.pokemon.types = this.pokemon.types.map(type => {
-          return 'assets/img/pokemon-types/' + type + '.png';
-        });
       },
     });
   }
@@ -52,7 +50,7 @@ export class PokemonCardComponent implements OnInit {
 
   @HostListener('click', ['$event'])
   onClick() {
-    if (this.pokemon !== ({} as LightPokemon)) {
+    if (JSON.stringify(this.pokemon) !== JSON.stringify({} as LightPokemon)) {
       this.cardClickEvent.emit(this.pokemon);
     }
   }

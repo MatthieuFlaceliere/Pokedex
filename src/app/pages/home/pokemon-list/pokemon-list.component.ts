@@ -9,7 +9,10 @@ import { LightPokemon } from '../interfaces/pokemon';
   styleUrls: ['./pokemon-list.component.scss'],
 })
 export class PokemonListComponent implements OnInit {
-  sortBy = 'number';
+  private _sortBy = 'number';
+  private _filterBy = 'all';
+  showFilterBox = false;
+
   _searchText = '';
   loading = true;
   pokemonsCompleteList: Array<Result> = [];
@@ -47,6 +50,9 @@ export class PokemonListComponent implements OnInit {
         response.results.forEach(pokemon => {
           // On récupère le numéro du pokémon à partir de l'url
           pokemon.number = this.pokemonService.getPokemonId(pokemon.url);
+          // On set l'état de capture du pokémon
+          pokemon.catched = this.pokemonService.isCatched(pokemon.number);
+          // On ajoute le pokémon à la liste complète
           this.pokemonsCompleteList.push(pokemon as Result);
         });
         this.pokemonsFiltered = this.pokemonsCompleteList;
@@ -74,6 +80,20 @@ export class PokemonListComponent implements OnInit {
    */
   closePokemonDetails() {
     this.pokemonDetails = null;
+  }
+
+  /**
+   * Change l'état de capture du pokémon
+   * @param LightPokemon Pokémon à modifier
+   * @returns void
+   */
+  togleCatchPokemon(pokemon: LightPokemon) {
+    const pokemonIndex = this.pokemonsCompleteList.findIndex(
+      p => p.number === pokemon.id
+    );
+    if (pokemonIndex) {
+      this.pokemonsCompleteList[pokemonIndex].catched = pokemon.catched;
+    }
   }
 
   //#region Pagination
@@ -175,45 +195,68 @@ export class PokemonListComponent implements OnInit {
         pokemon.number?.toString().includes(filterValue)
       );
     });
-
-    // On set les pokémons à afficher sur la première page
-    this.pokemonsCurrentPage = this.pokemonsFiltered.slice(
-      0,
-      this.pokemonsPerPage
-    );
-
-    // On set le nombre de pokémons total et on initialise la pagination
-    this.totalPokemons = this.pokemonsFiltered.length;
-    this.initPagination();
-  }
-
-  set searchText(value: string) {
-    this._searchText = value;
-    this.filterPokemon(value);
   }
 
   get searchText(): string {
     return this._searchText;
   }
 
-  /**
-   * Chnage le tri des pokémons number > name et name > number
-   * @returns void
-   */
-  changeSortBy() {
-    if (this.sortBy === 'number') {
-      this.sortBy = 'name';
+  set searchText(value: string) {
+    this._searchText = value;
+    this.filterPokemon(value);
+    // On set le nombre de pokémons total et on initialise la pagination
+    this.totalPokemons = this.pokemonsFiltered.length;
+    this.initPagination();
+  }
+
+  get sortByValue(): string {
+    return this._sortBy;
+  }
+
+  set sortByValue(value: string) {
+    if (value === 'name') {
       this.pokemonsFiltered.sort((a, b) => {
         return a.name.localeCompare(b.name);
       });
-    } else {
-      this.sortBy = 'number';
+    }
+    if (value === 'number') {
       this.pokemonsFiltered.sort((a, b) => {
         if (a.number === undefined || b.number === undefined) return -1;
         return a.number - b.number;
       });
     }
+    this._sortBy = value;
     this.initPagination();
+    this.togleFilterBox();
+  }
+
+  get filterByValue(): string {
+    return this._filterBy;
+  }
+
+  set filterByValue(value: string) {
+    // Permet de récupérer les pokémons filtrés par le nom ou le numéro et ensuite de filtrer par catched ou not-catched
+    this.filterPokemon(this.searchText);
+
+    if (value === 'catched') {
+      this.pokemonsFiltered = this.pokemonsFiltered.filter(pokemon => {
+        return pokemon.catched;
+      });
+    } else if (value === 'not-catched') {
+      this.pokemonsFiltered = this.pokemonsFiltered.filter(pokemon => {
+        return !pokemon.catched;
+      });
+    }
+    this._filterBy = value;
+
+    // On set le nombre de pokémons total et on initialise la pagination
+    this.totalPokemons = this.pokemonsFiltered.length;
+    this.initPagination();
+    this.togleFilterBox();
+  }
+
+  togleFilterBox() {
+    this.showFilterBox = !this.showFilterBox;
   }
 
   //#endregion Filter

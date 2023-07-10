@@ -10,6 +10,7 @@ import { PokemonService } from '../../services/pokemon.service';
 export class PokemonDetailsComponent implements OnInit {
   @Input() pokemon: LightPokemon = {} as LightPokemon;
   @Output() closeDetailsEvent = new EventEmitter<void>();
+  @Output() togleCatchEvent = new EventEmitter<LightPokemon>();
   loadingImage = true;
   defaultImage: string;
   pokemonImageUrl: string;
@@ -22,6 +23,11 @@ export class PokemonDetailsComponent implements OnInit {
     if (this.pokemon.image !== null) {
       this.pokemonImageUrl = this.pokemon.image;
     }
+    // Si le ype du pokemon est déja le path de l'image, on ne fait rien
+    this.pokemon.types = this.pokemon.types.map(type => {
+      if (type.includes('.png')) return type;
+      else return 'assets/img/pokemon-types/' + type + '.png';
+    });
   }
 
   closeDetails() {
@@ -35,8 +41,9 @@ export class PokemonDetailsComponent implements OnInit {
   /**
    * Chnage l'état de capture du pokémon
    */
-  toogleCatch() {
+  togleCatch() {
     this.pokemon.catched = this.pokemon.catched ? false : true;
-    this.pokemonService.toogleCatch(this.pokemon);
+    this.togleCatchEvent.emit(this.pokemon);
+    this.pokemonService.togleCatch(this.pokemon);
   }
 }

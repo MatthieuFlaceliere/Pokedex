@@ -68,6 +68,18 @@ export class PokemonService {
   }
 
   /**
+   * Retourne si le pokémon est capturé ou non
+   * @param id Id du pokémon
+   * @returns boolean
+   */
+  isCatched(id: number): boolean {
+    if (this.user) {
+      return this.user.catchedPokemons.includes(id);
+    }
+    return false;
+  }
+
+  /**
    * Récupère le détail d'un pokémon à partir de son id dans le localStorage
    * @param id Id du pokémon
    * @returns Pokemon
@@ -98,7 +110,7 @@ export class PokemonService {
    * @param pokemon LightPokemon
    * @returns void
    */
-  toogleCatch(pokemon: LightPokemon): void {
+  togleCatch(pokemon: LightPokemon): void {
     if (this.user) {
       if (pokemon.catched) {
         this.user.catchedPokemons.push(pokemon.id);
@@ -123,7 +135,7 @@ export class PokemonService {
       name: pokemon.name,
       image: pokemon.sprites.front_default,
       types: pokemon.types.map(type => type.type.name),
-      catched: this.user?.catchedPokemons.includes(pokemon.id) || false,
+      catched: false, // Ce champ sera modifié par la suite dans getPokemonDetails() dans PokemonCardComponent
       height: pokemon.height * 10, // Convert to dm -> cm
       weight: pokemon.weight / 10, // Convert to hg -> kg
       stats: pokemon.stats,

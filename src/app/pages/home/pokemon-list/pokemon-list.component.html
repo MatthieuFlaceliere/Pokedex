@@ -1,53 +1,139 @@
 <div class="filter">
-  <input type="search" id="search" name="search" placeholder="Rechercher nom ou numéro" [(ngModel)]="searchText">
-  <input #filterBtn type="button" class="filter-btn" [value]="sortBy === 'number' ?  '#' : 'A'" (click)="changeSortBy()">
+  <input
+    type="search"
+    id="search"
+    name="search"
+    placeholder="Rechercher nom ou numéro"
+    [(ngModel)]="searchText" />
+  <button
+    #filterBtn
+    type="button"
+    class="filter-btn"
+    (click)="togleFilterBox()">
+    <img src="assets/img/home/filter.png" alt="filter" />
+  </button>
+  <div class="filterbox" *ngIf="showFilterBox">
+    <span class="filter-title"> Trier par: </span>
+    <div class="filter-options">
+      <label for="number">
+        <input
+          type="radio"
+          id="number"
+          name="sort"
+          value="number"
+          [(ngModel)]="sortByValue" />
+        Numéro
+      </label>
+
+      <label for="name"
+        ><input
+          type="radio"
+          id="name"
+          name="sort"
+          value="name"
+          [(ngModel)]="sortByValue" />Nom</label
+      >
+    </div>
+    <span class="filter-title"> Filtrer par: </span>
+    <div class="filter-options">
+      <label for="all"
+        ><input
+          type="radio"
+          id="all"
+          name="filter"
+          value="all"
+          [(ngModel)]="filterByValue" />Tous</label
+      >
+      <label for="catched"
+        ><input
+          type="radio"
+          id="catched"
+          name="filter"
+          value="catched"
+          [(ngModel)]="filterByValue" />Capturés</label
+      >
+      <label for="not-catched"
+        ><input
+          type="radio"
+          id="not-catched"
+          name="filter"
+          value="not-catched"
+          [(ngModel)]="filterByValue" />Non capturés</label
+      >
+    </div>
+  </div>
 </div>
 <div class="pokemon-container">
-  {{ loading ? 'Loading...' : ''}}
-  <app-pokemon-card *ngFor="let pokemon of pokemonsCurrentPage" [pokemonResult]="pokemon" [searchText]="searchText" (cardClickEvent)="openPokemonDetails($event)"></app-pokemon-card>
+  {{ loading ? 'Loading...' : '' }}
+  <app-pokemon-card
+    *ngFor="let pokemon of pokemonsCurrentPage"
+    [pokemonResult]="pokemon"
+    [searchText]="searchText"
+    (cardClickEvent)="openPokemonDetails($event)"></app-pokemon-card>
 </div>
 <!-- Pagination -->
 <div class="pagination">
-  <input 
+  <input
     [disabled]="currentPage === 1"
-    type="button" 
-    [value]="1" 
-    (click)="onPageChanged(1)" 
-    class="page-btn" 
-    [ngClass]="{'active': currentPage === 1}">
-  <input class="page-btn" type="button" disabled [hidden]="currentPage <= lastPage - 2 && lastPage > 5 || lastPage <= 5" value="...">
-  <input 
+    type="button"
+    [value]="1"
+    (click)="onPageChanged(1)"
+    class="page-btn"
+    [ngClass]="{ active: currentPage === 1 }" />
+  <input
+    class="page-btn"
+    type="button"
+    disabled
+    [hidden]="(currentPage <= lastPage - 2 && lastPage > 5) || lastPage <= 5"
+    value="..." />
+  <input
     [disabled]="currentPage === middlePages[0]"
     [hidden]="lastPage <= 2"
-    type="button" [value]="middlePages[0]" 
-    (click)="onPageChanged(middlePages[0])" 
-    class="page-btn" 
-    [ngClass]="{'active': currentPage === middlePages[0]}" >
-  <input 
-    [disabled]=" currentPage === middlePages[1]"
-    [hidden]="lastPage <= 3"
-    type="button" 
-    [value]="middlePages[1]" 
-    (click)="onPageChanged(middlePages[1])" 
-    class="page-btn" 
-    [ngClass]="{'active': currentPage === middlePages[1]}">
-  <input
-    [hidden]="currentPage < 3 && lastPage > 5 || middlePages[2] === lastPage || (currentPage === lastPage && lastPage > 5) || lastPage <= 4"
-    [disabled]="currentPage === middlePages[2]"
-    type="button" 
-    [value]="middlePages[2]" 
-    (click)="onPageChanged(middlePages[2])" 
+    type="button"
+    [value]="middlePages[0]"
+    (click)="onPageChanged(middlePages[0])"
     class="page-btn"
-    [ngClass]="{'active': currentPage === middlePages[2]}">
-  <input class="page-btn" type="button" disabled [hidden]="currentPage >= 3 || lastPage <= 5" value="...">
+    [ngClass]="{ active: currentPage === middlePages[0] }" />
+  <input
+    [disabled]="currentPage === middlePages[1]"
+    [hidden]="lastPage <= 3"
+    type="button"
+    [value]="middlePages[1]"
+    (click)="onPageChanged(middlePages[1])"
+    class="page-btn"
+    [ngClass]="{ active: currentPage === middlePages[1] }" />
+  <input
+    [hidden]="
+      (currentPage < 3 && lastPage > 5) ||
+      middlePages[2] === lastPage ||
+      (currentPage === lastPage && lastPage > 5) ||
+      lastPage <= 4
+    "
+    [disabled]="currentPage === middlePages[2]"
+    type="button"
+    [value]="middlePages[2]"
+    (click)="onPageChanged(middlePages[2])"
+    class="page-btn"
+    [ngClass]="{ active: currentPage === middlePages[2] }" />
+  <input
+    class="page-btn"
+    type="button"
+    disabled
+    [hidden]="currentPage >= 3 || lastPage <= 5"
+    value="..." />
   <input
     [disabled]="currentPage === lastPage"
     [hidden]="lastPage === 1"
-    type="button" [value]="lastPage" 
+    type="button"
+    [value]="lastPage"
     (click)="onPageChanged(lastPage)"
     class="page-btn"
-    [ngClass]="{'active': currentPage === lastPage}">  
+    [ngClass]="{ active: currentPage === lastPage }" />
 </div>
 
 <!-- Pokemon details -->
-<app-pokemon-details *ngIf="pokemonDetails" [pokemon]="pokemonDetails" (closeDetailsEvent)="closePokemonDetails()"></app-pokemon-details>
+<app-pokemon-details
+  *ngIf="pokemonDetails"
+  [pokemon]="pokemonDetails"
+  (closeDetailsEvent)="closePokemonDetails()"
+  (togleCatchEvent)="togleCatchPokemon($event)"></app-pokemon-details>
