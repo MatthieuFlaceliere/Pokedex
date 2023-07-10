@@ -1,9 +1,14 @@
 {
-  "hosting": [
-    {
-      "target": "AngularProjet",
-      "source": ".",
-      "frameworksBackend": {}
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "keylogger/**"
+    ],
+    "frameworksBackend": {
+      "region": "europe-west1"
     }
-  ]
+  }
 }
