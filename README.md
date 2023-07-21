@@ -14,7 +14,7 @@ Le pokedex possède différentes fonctionnalités tel que:
 
 ## Screenshots
 
-<p float="left">
+<p float="center">
   <img src="./ressources/img2.png" width="100" alt="img2" />
   <img src="./ressources/img1.png" width="100" alt="img1" />
   <img src="./ressources/img6.png" width="100" alt="img6" />
