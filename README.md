@@ -14,12 +14,14 @@ Le pokedex possède différentes fonctionnalités tel que:
 
 ## Screenshots
 
-<img src="./ressources/img2.png" width="100" alt="img2" />
-<img src="./ressources/img1.png" width="100" alt="img1" />
-<img src="./ressources/img6.png" width="100" alt="img6" />
-<img src="./ressources/img4.png" width="100" alt="img4" />
-<img src="./ressources/img5.png" width="100" alt="img5" />
-<img src="./ressources/img3.png" width="100" alt="img3" />
+<p float="left">
+  <img src="./ressources/img2.png" width="100" alt="img2" />
+  <img src="./ressources/img1.png" width="100" alt="img1" />
+  <img src="./ressources/img6.png" width="100" alt="img6" />
+  <img src="./ressources/img4.png" width="100" alt="img4" />
+  <img src="./ressources/img5.png" width="100" alt="img5" />
+  <img src="./ressources/img3.png" width="100" alt="img3" />
+</p>
 
 ## Installation
 
