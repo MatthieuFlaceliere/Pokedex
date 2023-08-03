@@ -39,7 +39,7 @@ npm run start:dev
 
 ## Pull Request
 
-Lors d'une pull request une demo est mis en place sur firebase hosting. La git action va écrir un commentaire sur la pull request avec le lien de la demo.
+Lors d'une pull request une demo est mise en place sur firebase hosting. La git action va écrire un commentaire sur la pull request avec le lien de la demo.
 
 ![image](./ressources/img7.png)
 
