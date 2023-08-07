@@ -1,4 +1,5 @@
 # Pokedex
+[![Deploy to Firebase](https://github.com/MatthieuFlaceliere/Pokedex/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/MatthieuFlaceliere/Pokedex/actions/workflows/firebase-hosting-merge.yml)
 
 ## Demo
 
